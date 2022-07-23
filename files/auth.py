@@ -1,7 +1,7 @@
 from distutils.log import error
 from sre_constants import SUCCESS
-from flask import Blueprint, flash, render_template
-from requests import request
+from flask import flash, render_template, request, Blueprint
+
 
 auth = Blueprint('auth', __name__)
 
@@ -11,12 +11,12 @@ def base():
     return render_template("base.html")
 
 
-@auth.route('/login', methods=['POST,GET'])
+@auth.route('/login', methods=['POST', 'GET'])
 def login():
     return render_template("login.html")
 
 
-@auth.route('/sign_up', methods=['POST,GET'])
+@auth.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
     if request.method == 'POST':
         firstname = request.form.get('firstname')
@@ -36,7 +36,7 @@ def sign_up():
         elif password1 != password2:
             flash('Password don\'t match ', category=error)
         else:
-            flash('account created successfully', category=SUCCESS)
+            flash('Account created successfully', category=SUCCESS)
 
     return render_template("sign_up.html")
 
@@ -44,7 +44,3 @@ def sign_up():
 @auth.route('/logout')
 def logout():
     return 'logout page'
-
-
-if __name__ == '__main__':
-    auth.run(debug=True)
